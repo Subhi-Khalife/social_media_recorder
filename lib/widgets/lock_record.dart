@@ -42,11 +42,7 @@ class _LockRecordState extends State<LockRecord> with TickerProviderStateMixin {
                           duration: Duration(milliseconds: 500),
                           curve: Curves.easeIn,
                           opacity: widget.soundRecorderState.second % 2 != 0 ? 0 : 1,
-                          child: Image.asset(
-                            "assets/images/lock.png",
-                            width: 20,
-                            height: 20,
-                          ),
+                          child:Icon(Icons.lock_outline_rounded)
                         ),
                       ),
                       Align(
@@ -55,11 +51,7 @@ class _LockRecordState extends State<LockRecord> with TickerProviderStateMixin {
                           duration: Duration(milliseconds: 500),
                           curve: Curves.easeIn,
                           opacity: widget.soundRecorderState.second % 2 == 0 ? 0 : 1,
-                          child: Image.asset(
-                            "assets/images/unlock.png",
-                            width: 20,
-                            height: 20,
-                          ),
+                          child: Icon(Icons.lock_open_rounded)
                         ),
                       ),
                     ],
