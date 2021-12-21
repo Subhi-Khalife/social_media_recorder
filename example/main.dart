@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:social_media_recorder/presentation/new_work/provider/sound_record_notifier.dart';
-import 'package:social_media_recorder/presentation/new_work/screen/simple_recorder.dart';
+import 'package:social_media_recorder/screen/simple_recorder.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,15 +8,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => SoundRecordNotifier(currentPlace: Offset(0, 0)),
-        ),
-      ],
-      child: MaterialApp(
-        home: MyHomePage(),
-      ),
+    return MaterialApp(
+      home: MyHomePage(),
     );
   }
 }
@@ -39,9 +30,9 @@ class _MyHomePageState extends State<MyHomePage> {
             alignment: Alignment.centerRight,
             child: RecorderReplaysAndComments(
               sendRequestFunction: (soundFile) {
-                /// soundFile The sound return When Finish record sound
+                /// soundFile => record sound file
+                print("the current path is ${soundFile.path}");
               },
-              
             ),
           ),
         ),

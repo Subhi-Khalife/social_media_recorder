@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_recorder/presentation/new_work/provider/sound_record_notifier.dart';
+import 'package:social_media_recorder/provider/sound_record_notifier.dart';
 
-class LockRecord2 extends StatefulWidget {
+/// This Class Represent Icons To swap top to lock recording
+class LockRecord extends StatefulWidget {
+  /// Object From Provider Notifier
   final SoundRecordNotifier soundRecorderState;
-  const LockRecord2({required this.soundRecorderState});
+  const LockRecord({required this.soundRecorderState});
   @override
   _LockRecordState createState() => _LockRecordState();
 }
 
-class _LockRecordState extends State<LockRecord2> with TickerProviderStateMixin {
+class _LockRecordState extends State<LockRecord> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    if(!widget.soundRecorderState.buttonPressed)
-    return Container();
+    /// If click the Button Then send show lock and un lock icon
+    if (!widget.soundRecorderState.buttonPressed) return Container();
     return AnimatedPadding(
       duration: Duration(seconds: 1),
       padding: EdgeInsets.all(widget.soundRecorderState.second % 2 == 0 ? 0 : 8),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_recorder/presentation/new_work/provider/sound_record_notifier.dart';
+import 'package:social_media_recorder/provider/sound_record_notifier.dart';
 
+/// Used this class to show counter and mic Icon
 class ShowCounter extends StatelessWidget {
   final SoundRecordNotifier soundRecorderState;
   final TextStyle? counterTextStyle;

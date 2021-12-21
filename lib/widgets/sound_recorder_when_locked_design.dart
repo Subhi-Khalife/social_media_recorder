@@ -2,24 +2,26 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:social_media_recorder/presentation/new_work/provider/sound_record_notifier.dart';
-import 'package:social_media_recorder/presentation/new_work/widgets/show_counter.dart';
+import 'package:social_media_recorder/provider/sound_record_notifier.dart';
+import 'package:social_media_recorder/widgets/show_counter.dart';
 
 // ignore: must_be_immutable
 class SoundRecorderWhenLockedDesign extends StatelessWidget {
   final SoundRecordNotifier soundRecordNotifier;
   final String? cancelText;
   final Function sendRequestFunction;
-  final Widget? sendRecordIcon;
+  final Widget? recordIconWhenLockedRecord;
   final TextStyle? cancelTextStyle;
   final TextStyle? counterTextStyle;
+  final Color recordIconWhenLockBackGroundColor;
   SoundRecorderWhenLockedDesign({
     required this.soundRecordNotifier,
     required this.cancelText,
     required this.sendRequestFunction,
-    required this.sendRecordIcon,
+    required this.recordIconWhenLockedRecord,
     required this.cancelTextStyle,
     required this.counterTextStyle,
+    required this.recordIconWhenLockBackGroundColor,
   });
 
   @override
@@ -55,15 +57,17 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
                       width: 50,
                       height: 50,
                       child: Container(
-                        color: Theme.of(context).accentColor,
+                        color: recordIconWhenLockBackGroundColor,
                         child: Padding(
                           padding: EdgeInsets.all(4.0),
-                          child: sendRecordIcon ??
+                          child: recordIconWhenLockedRecord ??
                               Icon(
                                 Icons.send,
                                 textDirection: TextDirection.ltr,
                                 size: 28,
-                                color: (soundRecordNotifier.buttonPressed) ? Colors.grey.shade200 : Colors.black,
+                                color: (soundRecordNotifier.buttonPressed)
+                                    ? Colors.grey.shade200
+                                    : Colors.black,
                               ),
                         ),
                       ),

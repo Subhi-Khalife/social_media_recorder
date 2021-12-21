@@ -1,14 +1,18 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:social_media_recorder/presentation/new_work/provider/sound_record_notifier.dart';
+import 'package:social_media_recorder/provider/sound_record_notifier.dart';
 
-class ShowMicWithText2 extends StatelessWidget {
+/// used to show mic and show dragg text when
+/// press into record icon
+class ShowMicWithText extends StatelessWidget {
   final bool shouldShowText;
   final String? slideToCancelText;
   final SoundRecordNotifier soundRecorderState;
   final TextStyle? slideToCancelTextStyle;
+  final Color? backGroundColor;
   final Widget? recordIcon;
-  ShowMicWithText2({
+  ShowMicWithText({
+    required this.backGroundColor,
     required this.shouldShowText,
     required this.soundRecorderState,
     required this.slideToCancelTextStyle,
@@ -41,7 +45,7 @@ class ShowMicWithText2 extends StatelessWidget {
                   height: soundRecorderState.buttonPressed ? 50 : 35,
                   child: Container(
                     color: (soundRecorderState.buttonPressed)
-                        ? Theme.of(context).accentColor
+                        ? backGroundColor ?? Theme.of(context).accentColor
                         : Colors.transparent,
                     child: Padding(
                       padding: EdgeInsets.all(4.0),
