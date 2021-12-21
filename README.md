@@ -21,10 +21,17 @@ min SDK: 8.0
 
 ## Usage
 Align(
+       
        alignment: Alignment.centerRight,
-          child: RecorderReplaysAndComments(
-            sendRequestFunction: (soundFile) {
-                # soundFile represent the sound you recording
-         },
+       
+       child: RecorderReplaysAndComments(
+       
+       sendRequestFunction: (soundFile) {
+       
+       # soundFile represent the sound you recording
+       
+       },
+    
     ),
+
 );
