@@ -1,6 +1,9 @@
-## [0.1.0] - 21 December 2021
+## [0.1.1] 
+
+* fix broken errors  
+## [0.1.0] 
 
 * fix broken build on Android. 
-## [0.0.1] - 21 December 2021
+## [0.0.1] 
 
 * Social Media Recorder Button Library Initial Build

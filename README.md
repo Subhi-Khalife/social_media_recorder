@@ -9,6 +9,10 @@ A Flutter package for both android and iOS which provides  Audio recorder from m
 ```xml
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<application
+        ...
+        android:requestLegacyExternalStorage="true">
+
 ```
 min SDK: 16
 ### iOs
@@ -19,6 +23,7 @@ min SDK: 16
 min SDK: 8.0 
 
 ## Usage
+
 Align(
        
        alignment: Alignment.centerRight,
