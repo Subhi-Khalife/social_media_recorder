@@ -8,7 +8,6 @@ A Flutter package for both android and iOS which provides  Audio recorder from m
 ### Android
 ```xml
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
-<!-- Optional, you'll have to check this permission by yourself. -->
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
 min SDK: 16
