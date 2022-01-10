@@ -1,4 +1,5 @@
 library social_media_recorder;
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -69,7 +70,8 @@ class _SimpleRecorderState extends State<RecorderReplaysAndComments> {
   @override
   void initState() {
     soundRecordNotifier = SoundRecordNotifier();
-    soundRecordNotifier.initialStorePathRecord = widget.storeSoundRecoringPath ?? "";
+    soundRecordNotifier.initialStorePathRecord =
+        widget.storeSoundRecoringPath ?? "";
     soundRecordNotifier.isShow = false;
     soundRecordNotifier.voidInitialSound();
     super.initState();
@@ -88,7 +90,8 @@ class _SimpleRecorderState extends State<RecorderReplaysAndComments> {
         ],
         child: Consumer<SoundRecordNotifier>(
           builder: (context, value, _) {
-            return Directionality(textDirection: TextDirection.rtl, child: makeBody(value));
+            return Directionality(
+                textDirection: TextDirection.rtl, child: makeBody(value));
           },
         ));
   }
@@ -120,7 +123,8 @@ class _SimpleRecorderState extends State<RecorderReplaysAndComments> {
       return SoundRecorderWhenLockedDesign(
         cancelText: widget.cancelText,
         cancelTextStyle: widget.cancelTextStyle,
-        recordIconWhenLockBackGroundColor: widget.recordIconWhenLockBackGroundColor ?? Colors.blue,
+        recordIconWhenLockBackGroundColor:
+            widget.recordIconWhenLockBackGroundColor ?? Colors.blue,
         counterTextStyle: widget.counterTextStyle,
         recordIconWhenLockedRecord: widget.recordIconWhenLockedRecord,
         sendRequestFunction: widget.sendRequestFunction,
@@ -150,7 +154,9 @@ class _SimpleRecorderState extends State<RecorderReplaysAndComments> {
         }
       },
       child: Container(
-          width: (soundRecordNotifier.isShow) ? MediaQuery.of(context).size.width : 50,
+          width: (soundRecordNotifier.isShow)
+              ? MediaQuery.of(context).size.width
+              : 50,
           child: Stack(
             children: [
               AnimatedPadding(
@@ -169,7 +175,8 @@ class _SimpleRecorderState extends State<RecorderReplaysAndComments> {
                         slideToCancelTextStyle: widget.slideToCancelTextStyle,
                         slideToCancelText: widget.slideToCancelText,
                       ),
-                      if (soundRecordNotifier.isShow) ShowCounter(soundRecorderState: state),
+                      if (soundRecordNotifier.isShow)
+                        ShowCounter(soundRecorderState: state),
                     ],
                   ),
                 ),

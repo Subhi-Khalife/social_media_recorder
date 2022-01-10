@@ -1,3 +1,6 @@
+## [0.1.32] 
+
+* fix error build with ios 
 ## [0.1.3] 
 
 * make update in readme.md file 

@@ -99,9 +99,17 @@ class SoundRecordNotifier extends ChangeNotifier {
 
   /// used to get the current store path
   Future<String> getFilePath() async {
-    String _sdPath = initialStorePathRecord.length == 0
-        ? "/storage/emulated/0/new_record_sound"
-        : initialStorePathRecord;
+    String _sdPath = "";
+    if (Platform.isIOS) {
+      Directory tempDir = await getTemporaryDirectory();
+      _sdPath = initialStorePathRecord.length == 0
+          ? tempDir.path
+          : initialStorePathRecord;
+    } else {
+      _sdPath = initialStorePathRecord.length == 0
+          ? "/storage/emulated/0/new_record_sound"
+          : initialStorePathRecord;
+    }
     var d = Directory(_sdPath);
     if (!d.existsSync()) {
       d.createSync(recursive: true);
@@ -205,6 +213,8 @@ class SoundRecordNotifier extends ChangeNotifier {
 
   /// to check permission
   voidInitialSound() async {
+    if (Platform.isIOS) _isAcceptedPermission = true;
+
     startRecord = false;
     final status = await Permission.microphone.status;
     if (status.isGranted) {
