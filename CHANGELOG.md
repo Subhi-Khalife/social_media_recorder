@@ -1,3 +1,19 @@
+## [0.1.37] 
+
+* update into readme file
+## [0.1.36] 
+
+* update into readme file
+
+## [0.1.35] 
+
+* rename some classes name
+## [0.1.34] 
+
+* fix some bugs and errors
+## [0.1.33] 
+
+* fix error build with ios 
 ## [0.1.32] 
 
 * fix error build with ios 

@@ -19,8 +19,7 @@ class _LockRecordState extends State<LockRecord> with TickerProviderStateMixin {
     if (!widget.soundRecorderState.buttonPressed) return Container();
     return AnimatedPadding(
       duration: Duration(seconds: 1),
-      padding:
-          EdgeInsets.all(widget.soundRecorderState.second % 2 == 0 ? 0 : 8),
+      padding: EdgeInsets.all(widget.soundRecorderState.second % 2 == 0 ? 0 : 8),
       child: Transform.translate(
           offset: Offset(0, -70),
           child: ClipRRect(
@@ -43,9 +42,7 @@ class _LockRecordState extends State<LockRecord> with TickerProviderStateMixin {
                         child: AnimatedOpacity(
                             duration: Duration(milliseconds: 500),
                             curve: Curves.easeIn,
-                            opacity: widget.soundRecorderState.second % 2 != 0
-                                ? 0
-                                : 1,
+                            opacity: widget.soundRecorderState.second % 2 != 0 ? 0 : 1,
                             child: Icon(Icons.lock_outline_rounded)),
                       ),
                       Align(
@@ -53,9 +50,7 @@ class _LockRecordState extends State<LockRecord> with TickerProviderStateMixin {
                         child: AnimatedOpacity(
                             duration: Duration(milliseconds: 500),
                             curve: Curves.easeIn,
-                            opacity: widget.soundRecorderState.second % 2 == 0
-                                ? 0
-                                : 1,
+                            opacity: widget.soundRecorderState.second % 2 == 0 ? 0 : 1,
                             child: Icon(Icons.lock_open_rounded)),
                       ),
                     ],

@@ -9,7 +9,9 @@ import 'package:social_media_recorder/widgets/show_counter.dart';
 import 'package:social_media_recorder/widgets/show_mic_with_text.dart';
 import 'package:social_media_recorder/widgets/sound_recorder_when_locked_design.dart';
 
-class RecorderReplaysAndComments extends StatefulWidget {
+import '../audio_encoder_type.dart';
+
+class SocialMediaRecorder extends StatefulWidget {
   /// function reture the recording sound file
   final Function(File soundFile) sendRequestFunction;
 
@@ -45,7 +47,11 @@ class RecorderReplaysAndComments extends StatefulWidget {
 
   /// put you file directory storage path if you didn't pass it take deafult path
   final String? storeSoundRecoringPath;
-  RecorderReplaysAndComments({
+
+  /// Chose the encode type
+  final AudioEncoderType encode;
+
+  SocialMediaRecorder({
     this.storeSoundRecoringPath = "",
     required this.sendRequestFunction,
     this.recordIcon,
@@ -58,20 +64,20 @@ class RecorderReplaysAndComments extends StatefulWidget {
     this.slideToCancelTextStyle,
     this.slideToCancelText = " Slide to Cancel >",
     this.cancelText = "Cancel",
+    this.encode = AudioEncoderType.AAC,
   });
 
   @override
-  _SimpleRecorderState createState() => _SimpleRecorderState();
+  _SocialMediaRecorder createState() => _SocialMediaRecorder();
 }
 
-class _SimpleRecorderState extends State<RecorderReplaysAndComments> {
+class _SocialMediaRecorder extends State<SocialMediaRecorder> {
   late SoundRecordNotifier soundRecordNotifier;
 
   @override
   void initState() {
     soundRecordNotifier = SoundRecordNotifier();
-    soundRecordNotifier.initialStorePathRecord =
-        widget.storeSoundRecoringPath ?? "";
+    soundRecordNotifier.initialStorePathRecord = widget.storeSoundRecoringPath ?? "";
     soundRecordNotifier.isShow = false;
     soundRecordNotifier.voidInitialSound();
     super.initState();
@@ -90,8 +96,7 @@ class _SimpleRecorderState extends State<RecorderReplaysAndComments> {
         ],
         child: Consumer<SoundRecordNotifier>(
           builder: (context, value, _) {
-            return Directionality(
-                textDirection: TextDirection.rtl, child: makeBody(value));
+            return Directionality(textDirection: TextDirection.rtl, child: makeBody(value));
           },
         ));
   }
@@ -123,8 +128,7 @@ class _SimpleRecorderState extends State<RecorderReplaysAndComments> {
       return SoundRecorderWhenLockedDesign(
         cancelText: widget.cancelText,
         cancelTextStyle: widget.cancelTextStyle,
-        recordIconWhenLockBackGroundColor:
-            widget.recordIconWhenLockBackGroundColor ?? Colors.blue,
+        recordIconWhenLockBackGroundColor: widget.recordIconWhenLockBackGroundColor ?? Colors.blue,
         counterTextStyle: widget.counterTextStyle,
         recordIconWhenLockedRecord: widget.recordIconWhenLockedRecord,
         sendRequestFunction: widget.sendRequestFunction,
@@ -154,9 +158,7 @@ class _SimpleRecorderState extends State<RecorderReplaysAndComments> {
         }
       },
       child: Container(
-          width: (soundRecordNotifier.isShow)
-              ? MediaQuery.of(context).size.width
-              : 50,
+          width: (soundRecordNotifier.isShow) ? MediaQuery.of(context).size.width : 50,
           child: Stack(
             children: [
               AnimatedPadding(
@@ -175,8 +177,7 @@ class _SimpleRecorderState extends State<RecorderReplaysAndComments> {
                         slideToCancelTextStyle: widget.slideToCancelTextStyle,
                         slideToCancelText: widget.slideToCancelText,
                       ),
-                      if (soundRecordNotifier.isShow)
-                        ShowCounter(soundRecorderState: state),
+                      if (soundRecordNotifier.isShow) ShowCounter(soundRecorderState: state),
                     ],
                   ),
                 ),
