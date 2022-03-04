@@ -63,6 +63,7 @@ class SoundRecordNotifier extends ChangeNotifier {
   late bool lockScreenRecord;
   late String mPath;
   late AudioEncoderType encode;
+  // ignore: sort_constructors_first
   SoundRecordNotifier({
     this.edge = 0.0,
     this.minute = 0,
@@ -78,7 +79,7 @@ class SoundRecordNotifier extends ChangeNotifier {
 
   /// To increase counter after 1 sencond
   void _mapCounterGenerater() {
-    _timerCounter = Timer(Duration(seconds: 1), () {
+    _timerCounter = Timer(const Duration(seconds: 1), () {
       _increaseCounterWhilePressed();
       _mapCounterGenerater();
     });
@@ -117,9 +118,9 @@ class SoundRecordNotifier extends ChangeNotifier {
     String _sdPath = "";
     if (Platform.isIOS) {
       Directory tempDir = await getTemporaryDirectory();
-      _sdPath = initialStorePathRecord.length == 0 ? tempDir.path : initialStorePathRecord;
+      _sdPath = initialStorePathRecord.isEmpty ? tempDir.path : initialStorePathRecord;
     } else {
-      _sdPath = initialStorePathRecord.length == 0
+      _sdPath = initialStorePathRecord.isEmpty
           ? "/storage/emulated/0/new_record_sound"
           : initialStorePathRecord;
     }
@@ -127,7 +128,7 @@ class SoundRecordNotifier extends ChangeNotifier {
     if (!d.existsSync()) {
       d.createSync(recursive: true);
     }
-    var uuid = Uuid();
+    var uuid = const Uuid();
     String uid = uuid.v1();
     String storagePath = _sdPath + "/" + uid + _getSoundExtention();
     mPath = storagePath;
@@ -184,6 +185,7 @@ class SoundRecordNotifier extends ChangeNotifier {
           }
           last = x.dx;
         }
+        // ignore: empty_catches
       } catch (e) {}
       notifyListeners();
     }
@@ -221,7 +223,7 @@ class SoundRecordNotifier extends ChangeNotifier {
     } else {
       buttonPressed = true;
       String recordFilePath = await getFilePath();
-      _timer = Timer(Duration(milliseconds: 900), () {
+      _timer = Timer(const Duration(milliseconds: 900), () {
         recordMp3.start(path: recordFilePath);
       });
       _mapCounterGenerater();

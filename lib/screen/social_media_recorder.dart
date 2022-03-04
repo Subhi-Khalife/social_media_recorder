@@ -57,7 +57,8 @@ class SocialMediaRecorder extends StatefulWidget {
   // use to change the counter back ground color
   final Color? counterBackGroundColor;
 
-  SocialMediaRecorder({
+  // ignore: sort_constructors_first
+  const SocialMediaRecorder({
     this.storeSoundRecoringPath = "",
     required this.sendRequestFunction,
     this.recordIcon,
@@ -73,7 +74,8 @@ class SocialMediaRecorder extends StatefulWidget {
     this.cancelText = "Cancel",
     this.encode = AudioEncoderType.AAC,
     this.radius,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SocialMediaRecorder createState() => _SocialMediaRecorder();

@@ -1,7 +1,6 @@
 library social_media_recorder;
 
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_recorder/provider/sound_record_notifier.dart';
 import 'package:social_media_recorder/widgets/show_counter.dart';
@@ -16,7 +15,9 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
   final TextStyle? counterTextStyle;
   final Color recordIconWhenLockBackGroundColor;
   final Color? counterBackGroundColor;
-  SoundRecorderWhenLockedDesign({
+  // ignore: sort_constructors_first
+  const SoundRecorderWhenLockedDesign({
+    Key? key,
     required this.soundRecordNotifier,
     required this.cancelText,
     required this.sendRequestFunction,
@@ -25,7 +26,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
     required this.counterTextStyle,
     required this.recordIconWhenLockBackGroundColor,
     required this.counterBackGroundColor,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

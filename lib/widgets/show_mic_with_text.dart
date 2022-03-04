@@ -14,21 +14,23 @@ class ShowMicWithText extends StatelessWidget {
   final Color? backGroundColor;
   final Widget? recordIcon;
   final Color? counterBackGroundColor;
+  // ignore: sort_constructors_first
   ShowMicWithText({
     required this.backGroundColor,
+    Key? key,
     required this.shouldShowText,
     required this.soundRecorderState,
     required this.slideToCancelTextStyle,
     required this.slideToCancelText,
     required this.recordIcon,
     required this.counterBackGroundColor,
-  });
+  }):super(key: key);
   final colorizeColors = [
     Colors.black,
     Colors.grey.shade200,
     Colors.black,
   ];
-  final colorizeTextStyle = TextStyle(
+  final colorizeTextStyle = const TextStyle(
     fontSize: 14.0,
     fontFamily: 'Horizon',
   );
@@ -52,10 +54,10 @@ class ShowMicWithText extends StatelessWidget {
                   height: soundRecorderState.buttonPressed ? 50 : 35,
                   child: Container(
                     color: (soundRecorderState.buttonPressed)
-                        ? backGroundColor ?? Theme.of(context).accentColor
+                        ? backGroundColor ?? Theme.of(context).colorScheme.secondary
                         : Colors.transparent,
                     child: Padding(
-                      padding: EdgeInsets.all(4.0),
+                      padding: const EdgeInsets.all(4.0),
                       child: recordIcon ??
                           Icon(
                             Icons.mic,
@@ -73,7 +75,7 @@ class ShowMicWithText extends StatelessWidget {
         ),
         if (shouldShowText)
           Padding(
-            padding: EdgeInsets.only(left: 8, right: 8),
+            padding:const EdgeInsets.only(left: 8, right: 8),
             child: DefaultTextStyle(
               overflow: TextOverflow.clip,
               maxLines: 1,
