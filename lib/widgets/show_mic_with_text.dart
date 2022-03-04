@@ -13,6 +13,7 @@ class ShowMicWithText extends StatelessWidget {
   final TextStyle? slideToCancelTextStyle;
   final Color? backGroundColor;
   final Widget? recordIcon;
+  final Color? counterBackGroundColor;
   ShowMicWithText({
     required this.backGroundColor,
     required this.shouldShowText,
@@ -20,6 +21,7 @@ class ShowMicWithText extends StatelessWidget {
     required this.slideToCancelTextStyle,
     required this.slideToCancelText,
     required this.recordIcon,
+    required this.counterBackGroundColor,
   });
   final colorizeColors = [
     Colors.black,
@@ -33,10 +35,13 @@ class ShowMicWithText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment:
+          !soundRecorderState.buttonPressed ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
         Row(
           children: [
             Transform.scale(
+              key: soundRecorderState.key,
               scale: soundRecorderState.buttonPressed ? 1.2 : 1,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(600),

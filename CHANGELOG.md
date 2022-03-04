@@ -1,3 +1,6 @@
+
+## [0.1.4] 
+fix overflow error and mic scrolling more smoothly
 ## [0.1.37] 
 
 * update into readme file

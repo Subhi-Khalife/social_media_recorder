@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -9,6 +8,8 @@ import 'package:social_media_recorder/audio_encoder_type.dart';
 import 'package:uuid/uuid.dart';
 
 class SoundRecordNotifier extends ChangeNotifier {
+  GlobalKey key = GlobalKey();
+
   /// This Timer Just For wait about 1 second until starting record
   Timer? _timer;
 
@@ -91,6 +92,7 @@ class SoundRecordNotifier extends ChangeNotifier {
     second = 0;
     minute = 0;
     isShow = false;
+    key = GlobalKey();
     heightPosition = 0;
     lockScreenRecord = false;
     if (_timer != null) _timer!.cancel();
@@ -141,44 +143,50 @@ class SoundRecordNotifier extends ChangeNotifier {
   /// or To The X vertical
   /// and update this value in screen
   updateScrollValue(Offset currentValue, BuildContext context) async {
-    final x = currentValue;
+    if (buttonPressed == true) {
+      final x = currentValue;
 
-    /// take the diffrent between the origin and the current
-    /// draggable to the top place
-    double hightValue = currentButtonHeihtPlace - x.dy;
+      /// take the diffrent between the origin and the current
+      /// draggable to the top place
+      double hightValue = currentButtonHeihtPlace - x.dy;
 
-    /// if reached to the max draggable value in the top
-    if (hightValue >= 50) {
-      isLocked = true;
-      lockScreenRecord = true;
-      hightValue = 50;
+      /// if reached to the max draggable value in the top
+      if (hightValue >= 50) {
+        isLocked = true;
+        lockScreenRecord = true;
+        hightValue = 50;
+        notifyListeners();
+      }
+      if (hightValue < 0) hightValue = 0;
+      heightPosition = hightValue;
+      lockScreenRecord = isLocked;
+      notifyListeners();
+
+      /// this operation for update X oriantation
+      /// draggable to the left or right place
+      try {
+        RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
+        Offset position = box.localToGlobal(Offset.zero);
+        if (position.dx <= MediaQuery.of(context).size.width * 0.6) {
+          resetEdgePadding();
+        } else if (x.dx >= MediaQuery.of(context).size.width) {
+          edge = 0;
+          edge = 0;
+        } else {
+          if (x.dx <= MediaQuery.of(context).size.width * 0.5) {}
+          if (last < x.dx) {
+            edge = edge -= x.dx / 200;
+            if (edge < 0) {
+              edge = 0;
+            }
+          } else if (last > x.dx) {
+            edge = edge += x.dx / 200;
+          }
+          last = x.dx;
+        }
+      } catch (e) {}
       notifyListeners();
     }
-    if (hightValue < 0) hightValue = 0;
-    heightPosition = hightValue;
-    lockScreenRecord = isLocked;
-    notifyListeners();
-
-    /// this operation for update X oriantation
-    /// draggable to the left or right place
-    if (x.dx <= MediaQuery.of(context).size.width * 0.77) {
-      resetEdgePadding();
-    } else if (x.dx >= MediaQuery.of(context).size.width) {
-      edge = 0;
-      edge = 0;
-    } else {
-      if (x.dx <= MediaQuery.of(context).size.width * 0.5) {}
-      if (last < x.dx) {
-        edge = edge -= x.dx / 200;
-        if (edge < 0) {
-          edge = 0;
-        }
-      } else if (last > x.dx) {
-        edge = edge += x.dx / 200;
-      }
-      last = x.dx;
-    }
-    notifyListeners();
   }
 
   /// this function to manage counter value

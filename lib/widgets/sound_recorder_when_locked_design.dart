@@ -15,6 +15,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
   final TextStyle? cancelTextStyle;
   final TextStyle? counterTextStyle;
   final Color recordIconWhenLockBackGroundColor;
+  final Color? counterBackGroundColor;
   SoundRecorderWhenLockedDesign({
     required this.soundRecordNotifier,
     required this.cancelText,
@@ -23,6 +24,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
     required this.cancelTextStyle,
     required this.counterTextStyle,
     required this.recordIconWhenLockBackGroundColor,
+    required this.counterBackGroundColor,
   });
 
   @override
@@ -91,6 +93,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
             ShowCounter(
               soundRecorderState: soundRecordNotifier,
               counterTextStyle: counterTextStyle,
+              counterBackGroundColor: counterBackGroundColor,
             ),
           ],
         ),

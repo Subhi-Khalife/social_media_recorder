@@ -51,10 +51,17 @@ class SocialMediaRecorder extends StatefulWidget {
   /// Chose the encode type
   final AudioEncoderType encode;
 
+  /// use if you want change the raduis of un record
+  final BorderRadius? radius;
+
+  // use to change the counter back ground color
+  final Color? counterBackGroundColor;
+
   SocialMediaRecorder({
     this.storeSoundRecoringPath = "",
     required this.sendRequestFunction,
     this.recordIcon,
+    this.counterBackGroundColor,
     this.recordIconWhenLockedRecord,
     this.recordIconBackGroundColor = Colors.blue,
     this.recordIconWhenLockBackGroundColor = Colors.blue,
@@ -65,6 +72,7 @@ class SocialMediaRecorder extends StatefulWidget {
     this.slideToCancelText = " Slide to Cancel >",
     this.cancelText = "Cancel",
     this.encode = AudioEncoderType.AAC,
+    this.radius,
   });
 
   @override
@@ -128,6 +136,7 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
       return SoundRecorderWhenLockedDesign(
         cancelText: widget.cancelText,
         cancelTextStyle: widget.cancelTextStyle,
+        counterBackGroundColor: widget.counterBackGroundColor,
         recordIconWhenLockBackGroundColor: widget.recordIconWhenLockBackGroundColor ?? Colors.blue,
         counterTextStyle: widget.counterTextStyle,
         recordIconWhenLockedRecord: widget.recordIconWhenLockedRecord,
@@ -146,30 +155,36 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
       },
       onPointerUp: (details) async {
         if (!state.isLocked) {
-          // soundRecordNotifier.isShow = false;
           if (state.buttonPressed) {
             if (state.second > 1 || state.minute > 0) {
               String path = state.mPath;
-              await Future.delayed(Duration(milliseconds: 500));
               widget.sendRequestFunction(File.fromUri(Uri(path: path)));
             }
           }
           state.resetEdgePadding();
         }
       },
-      child: Container(
-          width: (soundRecordNotifier.isShow) ? MediaQuery.of(context).size.width : 50,
+      child: AnimatedContainer(
+          duration: Duration(milliseconds: soundRecordNotifier.isShow ? 0 : 300),
+          height: 50,
+          width: (soundRecordNotifier.isShow) ? MediaQuery.of(context).size.width : 40,
           child: Stack(
             children: [
-              AnimatedPadding(
-                duration: Duration(milliseconds: state.edge == 0 ? 700 : 0),
-                curve: Curves.easeIn,
+              Padding(
                 padding: EdgeInsets.only(right: state.edge * 0.8),
                 child: Container(
-                  color: widget.backGroundColor ?? Colors.grey.shade100,
+                  decoration: BoxDecoration(
+                    borderRadius: soundRecordNotifier.isShow
+                        ? BorderRadius.circular(12)
+                        : widget.radius != null && !soundRecordNotifier.isShow
+                            ? widget.radius
+                            : BorderRadius.circular(0),
+                    color: widget.backGroundColor ?? Colors.grey.shade100,
+                  ),
                   child: Stack(
                     children: [
                       ShowMicWithText(
+                        counterBackGroundColor: widget.counterBackGroundColor,
                         backGroundColor: widget.recordIconBackGroundColor,
                         recordIcon: widget.recordIcon,
                         shouldShowText: soundRecordNotifier.isShow,
@@ -177,7 +192,10 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
                         slideToCancelTextStyle: widget.slideToCancelTextStyle,
                         slideToCancelText: widget.slideToCancelText,
                       ),
-                      if (soundRecordNotifier.isShow) ShowCounter(soundRecorderState: state),
+                      if (soundRecordNotifier.isShow)
+                        ShowCounter(
+                            counterBackGroundColor: widget.counterBackGroundColor,
+                            soundRecorderState: state),
                     ],
                   ),
                 ),
