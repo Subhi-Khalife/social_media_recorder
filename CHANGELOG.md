@@ -1,5 +1,7 @@
 
-## [0.1.4] 
+## [0.1.42] 
+fix readme 
+## [0.1.41] 
 fix overflow error and mic scrolling more smoothly
 ## [0.1.37] 
 
