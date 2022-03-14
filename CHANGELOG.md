@@ -1,4 +1,5 @@
-
+## [0.1.5] 
+fix design error and make scrolling more smoothly
 ## [0.1.44] 
 fix readme 
 ## [0.1.41] 

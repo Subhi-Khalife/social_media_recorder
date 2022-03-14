@@ -80,17 +80,26 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
-            InkWell(
-                onTap: () {
-                  soundRecordNotifier.isShow = false;
-                  soundRecordNotifier.resetEdgePadding();
-                },
-                child: Text(
-                  cancelText ?? "",
-                  style: cancelTextStyle ?? TextStyle(color: Colors.black),
-                )),
-            Spacer(),
+            Expanded(
+              child: InkWell(
+                  onTap: () {
+                    soundRecordNotifier.isShow = false;
+                    soundRecordNotifier.resetEdgePadding();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      cancelText ?? "",
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.clip,
+                      style: cancelTextStyle ??
+                          TextStyle(
+                            color: Colors.black,
+                          ),
+                    ),
+                  )),
+            ),
             ShowCounter(
               soundRecorderState: soundRecordNotifier,
               counterTextStyle: counterTextStyle,

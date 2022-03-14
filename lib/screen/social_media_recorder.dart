@@ -173,7 +173,7 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
           child: Stack(
             children: [
               Padding(
-                padding: EdgeInsets.only(right: state.edge * 0.8),
+                padding: EdgeInsets.only(right: state.edge),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: soundRecordNotifier.isShow

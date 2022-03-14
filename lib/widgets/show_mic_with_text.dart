@@ -24,7 +24,7 @@ class ShowMicWithText extends StatelessWidget {
     required this.slideToCancelText,
     required this.recordIcon,
     required this.counterBackGroundColor,
-  }):super(key: key);
+  }) : super(key: key);
   final colorizeColors = [
     Colors.black,
     Colors.grey.shade200,
@@ -74,24 +74,26 @@ class ShowMicWithText extends StatelessWidget {
           ],
         ),
         if (shouldShowText)
-          Padding(
-            padding:const EdgeInsets.only(left: 8, right: 8),
-            child: DefaultTextStyle(
-              overflow: TextOverflow.clip,
-              maxLines: 1,
-              style: const TextStyle(
-                fontSize: 14.0,
-              ),
-              child: AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    slideToCancelText ?? "",
-                    textStyle: slideToCancelTextStyle ?? colorizeTextStyle,
-                    colors: colorizeColors,
-                  ),
-                ],
-                isRepeatingAnimation: true,
-                onTap: () {},
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: DefaultTextStyle(
+                overflow: TextOverflow.clip,
+                maxLines: 1,
+                style: const TextStyle(
+                  fontSize: 14.0,
+                ),
+                child: AnimatedTextKit(
+                  animatedTexts: [
+                    ColorizeAnimatedText(
+                      slideToCancelText ?? "",
+                      textStyle: slideToCancelTextStyle ?? colorizeTextStyle,
+                      colors: colorizeColors,
+                    ),
+                  ],
+                  isRepeatingAnimation: true,
+                  onTap: () {},
+                ),
               ),
             ),
           ),
