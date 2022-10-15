@@ -37,8 +37,9 @@ class ShowMicWithText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment:
-          !soundRecorderState.buttonPressed ? MainAxisAlignment.center : MainAxisAlignment.start,
+      mainAxisAlignment: !soundRecorderState.buttonPressed
+          ? MainAxisAlignment.center
+          : MainAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -54,7 +55,8 @@ class ShowMicWithText extends StatelessWidget {
                   height: soundRecorderState.buttonPressed ? 50 : 35,
                   child: Container(
                     color: (soundRecorderState.buttonPressed)
-                        ? backGroundColor ?? Theme.of(context).colorScheme.secondary
+                        ? backGroundColor ??
+                            Theme.of(context).colorScheme.secondary
                         : Colors.transparent,
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),

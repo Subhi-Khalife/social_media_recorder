@@ -1,4 +1,10 @@
-## [0.1.5] 
+## [0.1.8] 
+add new options for design
+## [0.1.75] 
+fix some errors
+## [0.1.71] 
+change flutter sdk for version 2.8.1
+## [0.1.61] 
 fix design error and make scrolling more smoothly
 ## [0.1.44] 
 fix readme 
