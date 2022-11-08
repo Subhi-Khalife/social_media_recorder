@@ -1,3 +1,6 @@
+## [0.1.85] 
+update permission_handler version
+
 ## [0.1.8] 
 add new options for design
 ## [0.1.75] 
