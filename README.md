@@ -69,7 +69,7 @@ Align(
        
        },
        
-       encode: AudioEncoderType.AAC,
+       encode: AudioEncoder.AAC,
        
     ),
 

@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
-import 'package:social_media_recorder/audio_encoder_type.dart';
+import 'package:record/record.dart';
 import 'package:uuid/uuid.dart';
 
 class SoundRecordNotifier extends ChangeNotifier {
@@ -62,7 +62,7 @@ class SoundRecordNotifier extends ChangeNotifier {
   /// false
   late bool lockScreenRecord;
   late String mPath;
-  late AudioEncoderType encode;
+  late AudioEncoder encode;
   // ignore: sort_constructors_first
   SoundRecordNotifier({
     this.edge = 0.0,
@@ -74,7 +74,7 @@ class SoundRecordNotifier extends ChangeNotifier {
     this.startRecord = false,
     this.heightPosition = 0,
     this.lockScreenRecord = false,
-    this.encode = AudioEncoderType.AAC,
+    this.encode = AudioEncoder.AAC,
   });
 
   /// To increase counter after 1 sencond
@@ -103,10 +103,10 @@ class SoundRecordNotifier extends ChangeNotifier {
   }
 
   String _getSoundExtention() {
-    if (encode == AudioEncoderType.AAC ||
-        encode == AudioEncoderType.AAC_LD ||
-        encode == AudioEncoderType.AAC_HE ||
-        encode == AudioEncoderType.OPUS) {
+    if (encode == AudioEncoder.AAC ||
+        encode == AudioEncoder.AAC_LD ||
+        encode == AudioEncoder.AAC_HE ||
+        encode == AudioEncoder.OPUS) {
       return ".m4a";
     } else {
       return ".3gp";
@@ -226,7 +226,7 @@ class SoundRecordNotifier extends ChangeNotifier {
       buttonPressed = true;
       String recordFilePath = await getFilePath();
       _timer = Timer(const Duration(milliseconds: 900), () {
-        recordMp3.start(path: recordFilePath);
+        recordMp3.start(path: recordFilePath, encoder: encode);
       });
       _mapCounterGenerater();
       notifyListeners();

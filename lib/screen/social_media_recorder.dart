@@ -3,13 +3,12 @@ library social_media_recorder;
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:record/record.dart';
 import 'package:social_media_recorder/provider/sound_record_notifier.dart';
 import 'package:social_media_recorder/widgets/lock_record.dart';
 import 'package:social_media_recorder/widgets/show_counter.dart';
 import 'package:social_media_recorder/widgets/show_mic_with_text.dart';
 import 'package:social_media_recorder/widgets/sound_recorder_when_locked_design.dart';
-
-import '../audio_encoder_type.dart';
 
 class SocialMediaRecorder extends StatefulWidget {
   /// use it for change back ground of cancel
@@ -52,7 +51,7 @@ class SocialMediaRecorder extends StatefulWidget {
   final String? storeSoundRecoringPath;
 
   /// Chose the encode type
-  final AudioEncoderType encode;
+  final AudioEncoder encode;
 
   /// use if you want change the raduis of un record
   final BorderRadius? radius;
@@ -82,7 +81,7 @@ class SocialMediaRecorder extends StatefulWidget {
     this.slideToCancelTextStyle,
     this.slideToCancelText = " Slide to Cancel >",
     this.cancelText = "Cancel",
-    this.encode = AudioEncoderType.AAC,
+    this.encode = AudioEncoder.AAC,
     this.cancelTextBackGroundColor,
     this.radius,
     Key? key,
