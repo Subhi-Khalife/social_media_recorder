@@ -81,7 +81,7 @@ class SocialMediaRecorder extends StatefulWidget {
     this.slideToCancelTextStyle,
     this.slideToCancelText = " Slide to Cancel >",
     this.cancelText = "Cancel",
-    this.encode = AudioEncoder.AAC,
+    this.encode = AudioEncoder.aacLc,
     this.cancelTextBackGroundColor,
     this.radius,
     Key? key,

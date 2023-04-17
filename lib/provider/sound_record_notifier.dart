@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:record/record.dart';
 import 'package:record/record.dart';
 import 'package:uuid/uuid.dart';
 
@@ -63,6 +63,7 @@ class SoundRecordNotifier extends ChangeNotifier {
   late bool lockScreenRecord;
   late String mPath;
   late AudioEncoder encode;
+
   // ignore: sort_constructors_first
   SoundRecordNotifier({
     this.edge = 0.0,
@@ -74,7 +75,7 @@ class SoundRecordNotifier extends ChangeNotifier {
     this.startRecord = false,
     this.heightPosition = 0,
     this.lockScreenRecord = false,
-    this.encode = AudioEncoder.AAC,
+    this.encode = AudioEncoder.aacLc,
   });
 
   /// To increase counter after 1 sencond
@@ -103,13 +104,15 @@ class SoundRecordNotifier extends ChangeNotifier {
   }
 
   String _getSoundExtention() {
-    if (encode == AudioEncoder.AAC ||
-        encode == AudioEncoder.AAC_LD ||
-        encode == AudioEncoder.AAC_HE ||
-        encode == AudioEncoder.OPUS) {
+    if (encode == AudioEncoder.aacLc ||
+        encode == AudioEncoder.aacEld ||
+        encode == AudioEncoder.aacHe ||
+        encode == AudioEncoder.opus) {
       return ".m4a";
-    } else {
+    } else if (encode == AudioEncoder.amrNb || encode == AudioEncoder.amrWb) {
       return ".3gp";
+    } else {
+      return "$encode".split('.').last;
     }
   }
 
@@ -117,9 +120,8 @@ class SoundRecordNotifier extends ChangeNotifier {
   Future<String> getFilePath() async {
     String _sdPath = "";
     Directory tempDir = await getTemporaryDirectory();
-    _sdPath = initialStorePathRecord.isEmpty
-        ? tempDir.path
-        : initialStorePathRecord;
+    _sdPath =
+        initialStorePathRecord.isEmpty ? tempDir.path : initialStorePathRecord;
     var d = Directory(_sdPath);
     if (!d.existsSync()) {
       d.createSync(recursive: true);

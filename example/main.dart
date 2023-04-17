@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   sendRequestFunction: (soundFile) {
                     // print("the current path is ${soundFile.path}");
                   },
-                  encode: AudioEncoder.AAC,
+                  encode: AudioEncoder.aacLc,
                 ),
               ),
             ),
