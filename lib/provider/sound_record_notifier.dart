@@ -111,8 +111,10 @@ class SoundRecordNotifier extends ChangeNotifier {
       return ".m4a";
     } else if (encode == AudioEncoder.amrNb || encode == AudioEncoder.amrWb) {
       return ".3gp";
+    } else if (encode == AudioEncoder.vorbisOgg) {
+      return ".ogg";
     } else {
-      return "$encode".split('.').last;
+      return ".${"$encode".split('.').last}";
     }
   }
 
