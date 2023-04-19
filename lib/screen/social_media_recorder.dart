@@ -3,7 +3,6 @@ library social_media_recorder;
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:record/record.dart';
 import 'package:social_media_recorder/provider/sound_record_notifier.dart';
 import 'package:social_media_recorder/widgets/lock_record.dart';
 import 'package:social_media_recorder/widgets/show_counter.dart';
@@ -14,7 +13,7 @@ class SocialMediaRecorder extends StatefulWidget {
   /// use it for change back ground of cancel
   final Color? cancelTextBackGroundColor;
 
-  /// function reture the recording sound file
+  /// function return the recording sound file
   final Function(File soundFile) sendRequestFunction;
 
   /// recording Icon That pressesd to start record
@@ -48,10 +47,7 @@ class SocialMediaRecorder extends StatefulWidget {
   final TextStyle? cancelTextStyle;
 
   /// put you file directory storage path if you didn't pass it take deafult path
-  final String? storeSoundRecoringPath;
-
-  /// Chose the encode type
-  final AudioEncoder encode;
+  final String? storeSoundRecordingPath;
 
   /// use if you want change the raduis of un record
   final BorderRadius? radius;
@@ -67,7 +63,7 @@ class SocialMediaRecorder extends StatefulWidget {
   // ignore: sort_constructors_first
   const SocialMediaRecorder({
     this.sendButtonIcon,
-    this.storeSoundRecoringPath = "",
+    this.storeSoundRecordingPath = "",
     required this.sendRequestFunction,
     this.recordIcon,
     this.lockButton,
@@ -81,7 +77,6 @@ class SocialMediaRecorder extends StatefulWidget {
     this.slideToCancelTextStyle,
     this.slideToCancelText = " Slide to Cancel >",
     this.cancelText = "Cancel",
-    this.encode = AudioEncoder.aacLc,
     this.cancelTextBackGroundColor,
     this.radius,
     Key? key,
@@ -98,8 +93,7 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
   void initState() {
     soundRecordNotifier = SoundRecordNotifier();
     soundRecordNotifier.initialStorePathRecord =
-        widget.storeSoundRecoringPath ?? "";
-    soundRecordNotifier.encode = widget.encode;
+        widget.storeSoundRecordingPath ?? "";
     soundRecordNotifier.isShow = false;
     soundRecordNotifier.voidInitialSound();
     super.initState();

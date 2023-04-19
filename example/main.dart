@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:record/record.dart';
 import 'package:social_media_recorder/screen/social_media_recorder.dart';
 
 void main() {
@@ -44,7 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   sendRequestFunction: (soundFile) {
                     // print("the current path is ${soundFile.path}");
                   },
-                  encode: AudioEncoder.aacLc,
                 ),
               ),
             ),

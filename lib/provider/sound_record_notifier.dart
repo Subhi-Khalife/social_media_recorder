@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:record/record.dart';
+import 'package:record_mp3/record_mp3.dart';
 import 'package:uuid/uuid.dart';
 
 class SoundRecordNotifier extends ChangeNotifier {
@@ -22,14 +22,8 @@ class SoundRecordNotifier extends ChangeNotifier {
   /// Used when user enter the needed path
   String initialStorePathRecord = "";
 
-  /// recording mp3 sound Object
-  Record recordMp3 = Record();
-
-  /// recording mp3 sound to check if all permisiion passed
-  bool _isAcceptedPermission = false;
-
   /// used to update state when user draggable to the top state
-  double currentButtonHeihtPlace = 0;
+  double currentButtonHeightPlace = 0;
 
   /// used to know if isLocked recording make the object true
   /// else make the object isLocked false
@@ -55,14 +49,13 @@ class SoundRecordNotifier extends ChangeNotifier {
   /// store final path where user need store mp3 record
   late bool startRecord;
 
-  /// store the value we draggble to the top
+  /// store the value we draggable to the top
   late double heightPosition;
 
   /// store status of record if lock change to true else
   /// false
   late bool lockScreenRecord;
   late String mPath;
-  late AudioEncoder encode;
 
   // ignore: sort_constructors_first
   SoundRecordNotifier({
@@ -75,14 +68,13 @@ class SoundRecordNotifier extends ChangeNotifier {
     this.startRecord = false,
     this.heightPosition = 0,
     this.lockScreenRecord = false,
-    this.encode = AudioEncoder.aacLc,
   });
 
-  /// To increase counter after 1 sencond
-  void _mapCounterGenerater() {
+  /// To increase counter after 1 second
+  void _mapCounterGenerator() {
     _timerCounter = Timer(const Duration(seconds: 1), () {
       _increaseCounterWhilePressed();
-      _mapCounterGenerater();
+      _mapCounterGenerator();
     });
   }
 
@@ -99,45 +91,30 @@ class SoundRecordNotifier extends ChangeNotifier {
     lockScreenRecord = false;
     if (_timer != null) _timer!.cancel();
     if (_timerCounter != null) _timerCounter!.cancel();
-    recordMp3.stop();
+    RecordMp3.instance.stop();
     notifyListeners();
   }
 
-  String _getSoundExtention() {
-    if (encode == AudioEncoder.aacLc ||
-        encode == AudioEncoder.aacEld ||
-        encode == AudioEncoder.aacHe ||
-        encode == AudioEncoder.opus) {
-      return ".m4a";
-    } else if (encode == AudioEncoder.amrNb || encode == AudioEncoder.amrWb) {
-      return ".3gp";
-    } else if (encode == AudioEncoder.vorbisOgg) {
-      return ".ogg";
-    } else {
-      return ".${"$encode".split('.').last}";
-    }
+  String _getSoundExtension() {
+    return ".mp3";
   }
 
   /// used to get the current store path
   Future<String> getFilePath() async {
-    String _sdPath = "";
     Directory tempDir = await getTemporaryDirectory();
-    _sdPath =
-        initialStorePathRecord.isEmpty ? tempDir.path : initialStorePathRecord;
-    var d = Directory(_sdPath);
-    if (!d.existsSync()) {
-      d.createSync(recursive: true);
-    }
-    var uuid = const Uuid();
-    String uid = uuid.v1();
-    String storagePath = _sdPath + "/" + uid + _getSoundExtention();
-    mPath = storagePath;
-    return storagePath;
+    var file = File(
+      join(
+        initialStorePathRecord.isEmpty ? tempDir.path : initialStorePathRecord,
+        (const Uuid().v4() + _getSoundExtension()),
+      ),
+    );
+    file.createSync(recursive: true);
+    return mPath = file.path;
   }
 
   /// used to change the draggable to top value
   setNewInitialDraggableHeight(double newValue) {
-    currentButtonHeihtPlace = newValue;
+    currentButtonHeightPlace = newValue;
   }
 
   /// used to change the draggable to top value
@@ -149,21 +126,21 @@ class SoundRecordNotifier extends ChangeNotifier {
 
       /// take the diffrent between the origin and the current
       /// draggable to the top place
-      double hightValue = currentButtonHeihtPlace - x.dy;
+      double heightValue = currentButtonHeightPlace - x.dy;
 
       /// if reached to the max draggable value in the top
-      if (hightValue >= 50) {
+      if (heightValue >= 50) {
         isLocked = true;
         lockScreenRecord = true;
-        hightValue = 50;
+        heightValue = 50;
         notifyListeners();
       }
-      if (hightValue < 0) hightValue = 0;
-      heightPosition = hightValue;
+      if (heightValue < 0) heightValue = 0;
+      heightPosition = heightValue;
       lockScreenRecord = isLocked;
       notifyListeners();
 
-      /// this operation for update X oriantation
+      /// this operation for update X orientation
       /// draggable to the left or right place
       try {
         RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
@@ -215,34 +192,16 @@ class SoundRecordNotifier extends ChangeNotifier {
 
   /// this function to start record voice
   record() async {
-    if (!_isAcceptedPermission) {
-      await Permission.microphone.request();
-      await Permission.manageExternalStorage.request();
-      await Permission.storage.request();
-      _isAcceptedPermission = true;
-    } else {
-      buttonPressed = true;
-      String recordFilePath = await getFilePath();
-      _timer = Timer(const Duration(milliseconds: 900), () {
-        recordMp3.start(path: recordFilePath, encoder: encode);
-      });
-      _mapCounterGenerater();
-      notifyListeners();
-    }
+    buttonPressed = true;
+    _timer = Timer(const Duration(milliseconds: 900), () async {
+      RecordMp3.instance.start(await getFilePath(), print);
+    });
+    _mapCounterGenerator();
     notifyListeners();
   }
 
   /// to check permission
   voidInitialSound() async {
-    if (Platform.isIOS) _isAcceptedPermission = true;
-
     startRecord = false;
-    final status = await Permission.microphone.status;
-    if (status.isGranted) {
-      final result = await Permission.storage.request();
-      if (result.isGranted) {
-        _isAcceptedPermission = true;
-      }
-    }
   }
 }
