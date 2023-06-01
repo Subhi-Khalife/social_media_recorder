@@ -1,6 +1,6 @@
 name: social_media_recorder
 description: A Flutter package for both android and iOS which provides  Audio recorder from microphone to a given file path through Button to record voice like social media Button
-version: 0.1.86
+version: 0.1.87
 homepage: https://github.com/Subhi-Khalife/social_media_recorder
 
 environment:
