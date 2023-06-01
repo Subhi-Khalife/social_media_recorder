@@ -122,8 +122,9 @@ class SoundRecordNotifier extends ChangeNotifier {
           ? tempDir.path
           : initialStorePathRecord;
     } else {
+      Directory tempDir = await getTemporaryDirectory();
       _sdPath = initialStorePathRecord.isEmpty
-          ? "/storage/emulated/0/new_record_sound"
+          ? tempDir.path
           : initialStorePathRecord;
     }
     var d = Directory(_sdPath);
