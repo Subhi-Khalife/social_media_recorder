@@ -120,7 +120,6 @@ class SoundRecordNotifier extends ChangeNotifier {
       _sdPath = initialStorePathRecord.isEmpty
           ? tempDir.path
           : initialStorePathRecord;
-
     var d = Directory(_sdPath);
     if (!d.existsSync()) {
       d.createSync(recursive: true);
