@@ -116,17 +116,11 @@ class SoundRecordNotifier extends ChangeNotifier {
   /// used to get the current store path
   Future<String> getFilePath() async {
     String _sdPath = "";
-    if (Platform.isIOS) {
       Directory tempDir = await getTemporaryDirectory();
       _sdPath = initialStorePathRecord.isEmpty
           ? tempDir.path
           : initialStorePathRecord;
-    } else {
-      Directory tempDir = await getTemporaryDirectory();
-      _sdPath = initialStorePathRecord.isEmpty
-          ? tempDir.path
-          : initialStorePathRecord;
-    }
+
     var d = Directory(_sdPath);
     if (!d.existsSync()) {
       d.createSync(recursive: true);
