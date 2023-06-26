@@ -25,28 +25,44 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  double right = 32;
+  double bottom = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 140, left: 4, right: 4),
-          child: Align(
-            alignment: Alignment.centerRight,
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          Positioned(
+            right: right,
+            bottom: bottom,
             child: SocialMediaRecorder(
+              onPointedDown: () {
+                right = 0;
+                bottom = 0;
+                setState(() {});
+              },
+              onPointedUp: () {
+                right = 32;
+                bottom = 0;
+                setState(() {});
+              },
+              recordIcon:
+                  Icon(Icons.keyboard_voice_rounded, color: Colors.white),
               sendRequestFunction: (soundFile) {
-                // print("the current path is ${soundFile.path}");
+                print("the current path is ${soundFile.path}");
               },
               encode: AudioEncoderType.AAC,
-              
             ),
           ),
-        ),
+        ],
       ),
     );
   }

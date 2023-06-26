@@ -17,6 +17,8 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
   final Color? counterBackGroundColor;
   final Color? cancelTextBackGroundColor;
   final Widget? sendButtonIcon;
+  final Function? onPointedUp;
+
   // ignore: sort_constructors_first
   const SoundRecorderWhenLockedDesign({
     Key? key,
@@ -30,6 +32,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
     required this.recordIconWhenLockBackGroundColor,
     required this.counterBackGroundColor,
     required this.cancelTextBackGroundColor,
+    this.onPointedUp,
   }) : super(key: key);
 
   @override
@@ -45,6 +48,9 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
+          if (onPointedUp != null) {
+            onPointedUp!();
+          }
           soundRecordNotifier.isShow = false;
           soundRecordNotifier.resetEdgePadding();
         },
@@ -52,12 +58,16 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
           children: [
             InkWell(
               onTap: () async {
+                if (onPointedUp != null) {
+                  onPointedUp!();
+                }
                 soundRecordNotifier.isShow = false;
                 if (soundRecordNotifier.second > 1 ||
                     soundRecordNotifier.minute > 0) {
                   String path = soundRecordNotifier.mPath;
                   await Future.delayed(const Duration(milliseconds: 500));
-                  sendRequestFunction(File.fromUri(Uri(path: path)));
+                  sendRequestFunction(
+                      File.fromUri(Uri(path: path)));
                 }
                 soundRecordNotifier.resetEdgePadding();
               },
@@ -93,6 +103,9 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
             Expanded(
               child: InkWell(
                   onTap: () {
+                    if (onPointedUp != null) {
+                      onPointedUp!();
+                    }
                     soundRecordNotifier.isShow = false;
                     soundRecordNotifier.resetEdgePadding();
                   },

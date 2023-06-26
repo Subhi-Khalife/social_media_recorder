@@ -62,8 +62,11 @@ class SocialMediaRecorder extends StatefulWidget {
 
   // use to change lock icon to design you need it
   final Widget? lockButton;
+
   // use it to change send button when user lock the record
   final Widget? sendButtonIcon;
+  final Function? onPointedDown;
+  final Function? onPointedUp;
 
   // ignore: sort_constructors_first
   const SocialMediaRecorder({
@@ -77,6 +80,8 @@ class SocialMediaRecorder extends StatefulWidget {
     this.recordIconBackGroundColor = Colors.blue,
     this.recordIconWhenLockBackGroundColor = Colors.blue,
     this.backGroundColor,
+    this.onPointedDown,
+    this.onPointedUp,
     this.cancelTextStyle,
     this.counterTextStyle,
     this.slideToCancelTextStyle,
@@ -150,6 +155,7 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
     if (state.lockScreenRecord == true) {
       return SoundRecorderWhenLockedDesign(
         cancelText: widget.cancelText,
+        onPointedUp: widget.onPointedUp,
         sendButtonIcon: widget.sendButtonIcon,
         cancelTextBackGroundColor: widget.cancelTextBackGroundColor,
         cancelTextStyle: widget.cancelTextStyle,
@@ -167,16 +173,22 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
       onPointerDown: (details) async {
         state.setNewInitialDraggableHeight(details.position.dy);
         state.resetEdgePadding();
-
         soundRecordNotifier.isShow = true;
+        if (widget.onPointedDown != null) {
+          widget.onPointedDown!();
+        }
         state.record();
       },
       onPointerUp: (details) async {
         if (!state.isLocked) {
+          if (widget.onPointedUp != null) {
+            widget.onPointedUp!();
+          }
           if (state.buttonPressed) {
             if (state.second > 1 || state.minute > 0) {
               String path = state.mPath;
-              widget.sendRequestFunction(File.fromUri(Uri(path: path)));
+              widget.sendRequestFunction(File.fromUri(
+                  Uri(path: path)));
             }
           }
           state.resetEdgePadding();
@@ -199,7 +211,9 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
                       : widget.radius != null && !soundRecordNotifier.isShow
                           ? widget.radius
                           : BorderRadius.circular(0),
-                  color: widget.backGroundColor ?? Colors.grey.shade100,
+                  color: soundRecordNotifier.isShow
+                      ? (widget.backGroundColor ?? Colors.grey.shade100)
+                      : Colors.transparent,
                 ),
                 child: Stack(
                   children: [
