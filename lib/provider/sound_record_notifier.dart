@@ -116,10 +116,9 @@ class SoundRecordNotifier extends ChangeNotifier {
   /// used to get the current store path
   Future<String> getFilePath() async {
     String _sdPath = "";
-      Directory tempDir = await getTemporaryDirectory();
-      _sdPath = initialStorePathRecord.isEmpty
-          ? tempDir.path
-          : initialStorePathRecord;
+    Directory tempDir = await getTemporaryDirectory();
+    _sdPath =
+        initialStorePathRecord.isEmpty ? tempDir.path : initialStorePathRecord;
     var d = Directory(_sdPath);
     if (!d.existsSync()) {
       d.createSync(recursive: true);
@@ -210,7 +209,7 @@ class SoundRecordNotifier extends ChangeNotifier {
   }
 
   /// this function to start record voice
-  record() async {
+  record(Function()? startRecord) async {
     if (!_isAcceptedPermission) {
       await Permission.microphone.request();
       await Permission.manageExternalStorage.request();
@@ -222,6 +221,11 @@ class SoundRecordNotifier extends ChangeNotifier {
       _timer = Timer(const Duration(milliseconds: 900), () {
         recordMp3.start(path: recordFilePath);
       });
+
+      if (startRecord != null) {
+        startRecord();
+      }
+
       _mapCounterGenerater();
       notifyListeners();
     }
