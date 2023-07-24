@@ -59,12 +59,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       rec = true;
                     });
                   },
+                  stopRecording: (_time) {
+                    setState(() {
+                      rec = false;
+                      time = _time;
+                    });
+                    print("stopped");
+                    print(time);
+                  },
                   sendRequestFunction: (soundFile, _time) {
                     // print("the current path is ${soundFile.path}");
-                    setState(() {
-                      time = _time;
-                      rec = false;
-                    });
                   },
                   encode: AudioEncoderType.AAC,
                 ),
