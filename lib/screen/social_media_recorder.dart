@@ -15,8 +15,14 @@ class SocialMediaRecorder extends StatefulWidget {
   /// use it for change back ground of cancel
   final Color? cancelTextBackGroundColor;
 
-  /// function reture the recording sound file
-  final Function(File soundFile) sendRequestFunction;
+  /// function return the recording sound file and the time
+  final Function(File soundFile, String time) sendRequestFunction;
+
+  /// function called when start recording
+  final Function()? startRecording;
+
+  /// function called when stop recording, return the recording time (even if time < 1)
+  final Function(String time)? stopRecording;
 
   /// recording Icon That pressesd to start record
   final Widget? recordIcon;
@@ -70,6 +76,8 @@ class SocialMediaRecorder extends StatefulWidget {
     this.sendButtonIcon,
     this.storeSoundRecoringPath = "",
     required this.sendRequestFunction,
+    this.startRecording,
+    this.stopRecording,
     this.recordIcon,
     this.lockButton,
     this.counterBackGroundColor,
@@ -160,6 +168,7 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
         recordIconWhenLockedRecord: widget.recordIconWhenLockedRecord,
         sendRequestFunction: widget.sendRequestFunction,
         soundRecordNotifier: state,
+        stopRecording: widget.stopRecording,
       );
     }
 
@@ -169,16 +178,27 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
         state.resetEdgePadding();
 
         soundRecordNotifier.isShow = true;
-        state.record();
+        state.record(widget.startRecording);
       },
       onPointerUp: (details) async {
         if (!state.isLocked) {
           if (state.buttonPressed) {
             if (state.second > 1 || state.minute > 0) {
               String path = state.mPath;
-              widget.sendRequestFunction(File.fromUri(Uri(path: path)));
+              String _time =
+                  state.minute.toString() + ":" + state.second.toString();
+
+              widget.sendRequestFunction(File.fromUri(Uri(path: path)), _time);
             }
           }
+
+          String _time =
+              state.minute.toString() + ":" + state.second.toString();
+
+          if (widget.stopRecording != null) {
+            widget.stopRecording!(_time);
+          }
+
           state.resetEdgePadding();
         }
       },
