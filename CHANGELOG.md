@@ -1,5 +1,7 @@
-## [0.3.2] 
-fix README file
+## [0.3.31] 
+add permission line to README.md file
+## [0.3.3] 
+fix some issue for ios
 ## [0.3.1] 
 add stop and start Recording function + update packages 
 ## [0.1.87] 

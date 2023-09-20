@@ -22,6 +22,23 @@ min SDK: 16 (29 if you use OPUS)
 <key>NSMicrophoneUsageDescription</key>
 <string>We need to access to the microphone to record audio file</string>
 ```
+and add permission to ios -> podfile
+```xml
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+    target.build_configurations.each do |config|
+            config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+               '$(inherited)',
+
+               ## dart: PermissionGroup.microphone
+               'PERMISSION_MICROPHONE=1',
+             ]
+    end
+  end
+end
+```
+
 min SDK: 8.0 (11 if you use OPUS)
 
 ## Supported encoders

@@ -234,7 +234,7 @@ class SoundRecordNotifier extends ChangeNotifier {
 
   /// to check permission
   voidInitialSound() async {
-    if (Platform.isIOS) _isAcceptedPermission = true;
+    // if (Platform.isIOS) _isAcceptedPermission = true;
 
     startRecord = false;
     final status = await Permission.microphone.status;
