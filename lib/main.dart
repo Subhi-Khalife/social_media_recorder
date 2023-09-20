@@ -30,9 +30,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool rec = false;
-  String time = "0:00";
-
   @override
   void initState() {
     super.initState();
@@ -41,41 +38,25 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 400,
-          ),
-          rec ? const Text("Recording") : const Text("Not recording"),
-          Text("Time:" + time),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 140, left: 4, right: 4),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: SocialMediaRecorder(
-                  startRecording: () {
-                    setState(() {
-                      rec = true;
-                    });
-                  },
-                  stopRecording: (_time) {
-                    setState(() {
-                      rec = false;
-                      time = _time;
-                    });
-                    print("stopped");
-                    print(time);
-                  },
-                  sendRequestFunction: (soundFile, _time) {
-                    // print("the current path is ${soundFile.path}");
-                  },
-                  encode: AudioEncoderType.AAC,
-                ),
-              ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 140, left: 4, right: 4),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: SocialMediaRecorder(
+              startRecording: () {
+                // This function to make action when start recording
+              },
+              stopRecording: (_time) {
+                // This function to make action when stop recording
+              },
+              sendRequestFunction: (soundFile, _time) {
+                // print("the current path is ${soundFile.path}");
+              },
+              encode: AudioEncoderType.AAC,
             ),
           ),
-        ],
+        ),
       ),
     );
   }
