@@ -1,3 +1,5 @@
+## [0.3.0] 
+add stop and start Recording function + update packages 
 ## [0.1.87] 
 fix error in storage path for android
 
