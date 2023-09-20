@@ -1,3 +1,5 @@
+## [0.3.2] 
+fix README file
 ## [0.3.1] 
 add stop and start Recording function + update packages 
 ## [0.1.87] 
