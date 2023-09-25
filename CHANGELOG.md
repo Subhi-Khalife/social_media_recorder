@@ -1,3 +1,5 @@
+## [0.3.32] 
+change uuid package version
 ## [0.3.31] 
 add permission line to README.md file
 ## [0.3.3] 
