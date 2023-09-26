@@ -1,11 +1,11 @@
 # social_media_recorder
 A Flutter package for both android and iOS which provides  Audio recorder from microphone to a given file path through Button to record voice like social media Button
 ## Video
-![](https://github.com/Subhi-Khalife/social_media_recorder/blob/main/images/layout1.gif)
+![](https://github.com/Subhi-Khalife/social_media_recorder/blob/main/layout1.gif)
 
 
 ## images
-![](https://github.com/Subhi-Khalife/social_media_recorder/blob/main/images/1.jpg)
+![](https://github.com/Subhi-Khalife/social_media_recorder/blob/main/1.jpg)
 
 ### Android
 ```xml
