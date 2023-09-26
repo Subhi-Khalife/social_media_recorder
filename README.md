@@ -5,7 +5,7 @@ A Flutter package for both android and iOS which provides  Audio recorder from m
 
 
 ## images
-![](https://github.com/Subhi-Khalife/social_media_recorder/blob/main/assets/1.png)
+![](https://github.com/Subhi-Khalife/social_media_recorder/blob/main/assets/1.jpg)
 
 ### Android
 ```xml
