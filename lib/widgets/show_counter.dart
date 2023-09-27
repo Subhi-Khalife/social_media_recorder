@@ -8,9 +8,11 @@ class ShowCounter extends StatelessWidget {
   final SoundRecordNotifier soundRecorderState;
   final TextStyle? counterTextStyle;
   final Color? counterBackGroundColor;
+  final double fullRecordPackageHeight;
   // ignore: sort_constructors_first
   const ShowCounter({
     required this.soundRecorderState,
+    required this.fullRecordPackageHeight,
     Key? key,
     this.counterTextStyle,
     required this.counterBackGroundColor,
@@ -21,7 +23,7 @@ class ShowCounter extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        height: 50,
+        height: fullRecordPackageHeight,
         width: MediaQuery.of(context).size.width * 0.4,
         color: counterBackGroundColor ?? Colors.grey.shade100,
         child: Padding(

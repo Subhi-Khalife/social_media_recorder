@@ -1,12 +1,12 @@
 library social_media_recorder;
 
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:social_media_recorder/provider/sound_record_notifier.dart';
 import 'package:social_media_recorder/widgets/show_counter.dart';
 
 // ignore: must_be_immutable
 class SoundRecorderWhenLockedDesign extends StatelessWidget {
+  final double fullRecordPackageHeight;
   final SoundRecordNotifier soundRecordNotifier;
   final String? cancelText;
   final Function sendRequestFunction;
@@ -21,6 +21,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
   // ignore: sort_constructors_first
   const SoundRecorderWhenLockedDesign({
     Key? key,
+    required this.fullRecordPackageHeight,
     required this.sendButtonIcon,
     required this.soundRecordNotifier,
     required this.cancelText,
@@ -55,24 +56,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
             InkWell(
               onTap: () async {
                 soundRecordNotifier.isShow = false;
-
-                String time = soundRecordNotifier.minute.toString() +
-                    ":" +
-                    soundRecordNotifier.second.toString();
-
-                if (soundRecordNotifier.second > 1 ||
-                    soundRecordNotifier.minute > 0) {
-                  String path = soundRecordNotifier.mPath;
-                  await Future.delayed(const Duration(milliseconds: 500));
-
-                  sendRequestFunction(File.fromUri(Uri(path: path)), time);
-                }
-
-                if (stopRecording != null) {
-                  stopRecording!(time);
-                }
-
-                soundRecordNotifier.resetEdgePadding();
+                soundRecordNotifier.finishRecording();
               },
               child: Transform.scale(
                 scale: 1.2,
@@ -81,8 +65,8 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn,
-                    width: 50,
-                    height: 50,
+                    width: fullRecordPackageHeight,
+                    height: fullRecordPackageHeight,
                     child: Container(
                       color: recordIconWhenLockBackGroundColor,
                       child: Padding(
@@ -107,6 +91,10 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
               child: InkWell(
                   onTap: () {
                     soundRecordNotifier.isShow = false;
+                    String _time = soundRecordNotifier.minute.toString() +
+                        ":" +
+                        soundRecordNotifier.second.toString();
+                    if (stopRecording != null) stopRecording!(_time);
                     soundRecordNotifier.resetEdgePadding();
                   },
                   child: Padding(
@@ -127,6 +115,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
               soundRecorderState: soundRecordNotifier,
               counterTextStyle: counterTextStyle,
               counterBackGroundColor: counterBackGroundColor,
+              fullRecordPackageHeight: fullRecordPackageHeight,
             ),
           ],
         ),

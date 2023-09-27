@@ -14,9 +14,14 @@ class ShowMicWithText extends StatelessWidget {
   final Color? backGroundColor;
   final Widget? recordIcon;
   final Color? counterBackGroundColor;
+  final double fullRecordPackageHeight;
+  final double initRecordPackageWidth;
+
   // ignore: sort_constructors_first
   ShowMicWithText({
     required this.backGroundColor,
+    required this.initRecordPackageWidth,
+    required this.fullRecordPackageHeight,
     Key? key,
     required this.shouldShowText,
     required this.soundRecorderState,
@@ -42,17 +47,21 @@ class ShowMicWithText extends StatelessWidget {
           : MainAxisAlignment.start,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Transform.scale(
               key: soundRecorderState.key,
-              scale: soundRecorderState.buttonPressed ? 1.2 : 1,
+              scale: soundRecorderState.buttonPressed ? 1.3 : 1,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(600),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.easeIn,
-                  width: soundRecorderState.buttonPressed ? 50 : 35,
-                  height: 50,
+                  width: soundRecorderState.buttonPressed
+                      ? fullRecordPackageHeight
+                      : initRecordPackageWidth - 5,
+                  height: fullRecordPackageHeight,
                   child: Container(
                     color: (soundRecorderState.buttonPressed)
                         ? backGroundColor ??

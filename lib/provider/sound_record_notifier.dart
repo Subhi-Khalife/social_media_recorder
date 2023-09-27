@@ -8,7 +8,9 @@ import 'package:social_media_recorder/audio_encoder_type.dart';
 import 'package:uuid/uuid.dart';
 
 class SoundRecordNotifier extends ChangeNotifier {
+  int _localCounterForMaxRecordTime = 0;
   GlobalKey key = GlobalKey();
+  int? maxRecordTime;
 
   /// This Timer Just For wait about 1 second until starting record
   Timer? _timer;
@@ -62,9 +64,22 @@ class SoundRecordNotifier extends ChangeNotifier {
   /// false
   late bool lockScreenRecord;
   late String mPath;
+
+  /// function called when start recording
+  Function()? startRecording;
+  Function(File soundFile, String time) sendRequestFunction;
+
+  /// function called when stop recording, return the recording time (even if time < 1)
+  Function(String time)? stopRecording;
+
   late AudioEncoderType encode;
+
   // ignore: sort_constructors_first
+
   SoundRecordNotifier({
+    required this.stopRecording,
+    required this.sendRequestFunction,
+    required this.startRecording,
     this.edge = 0.0,
     this.minute = 0,
     this.second = 0,
@@ -75,18 +90,32 @@ class SoundRecordNotifier extends ChangeNotifier {
     this.heightPosition = 0,
     this.lockScreenRecord = false,
     this.encode = AudioEncoderType.AAC,
+    this.maxRecordTime,
   });
 
   /// To increase counter after 1 sencond
   void _mapCounterGenerater() {
     _timerCounter = Timer(const Duration(seconds: 1), () {
       _increaseCounterWhilePressed();
-      _mapCounterGenerater();
+      if (buttonPressed) _mapCounterGenerater();
     });
+  }
+
+  finishRecording() {
+    if (buttonPressed) {
+      if (second > 1 || minute > 0) {
+        String path = mPath;
+        String _time = minute.toString() + ":" + second.toString();
+        sendRequestFunction(File.fromUri(Uri(path: path)), _time);
+        stopRecording!(_time);
+      }
+    }
+    resetEdgePadding();
   }
 
   /// used to reset all value to initial value when end the record
   resetEdgePadding() async {
+    _localCounterForMaxRecordTime = 0;
     isLocked = false;
     edge = 0;
     buttonPressed = false;
@@ -164,6 +193,8 @@ class SoundRecordNotifier extends ChangeNotifier {
         RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
         Offset position = box.localToGlobal(Offset.zero);
         if (position.dx <= MediaQuery.of(context).size.width * 0.6) {
+          String _time = minute.toString() + ":" + second.toString();
+          if (stopRecording != null) stopRecording!(_time);
           resetEdgePadding();
         } else if (x.dx >= MediaQuery.of(context).size.width) {
           edge = 0;
@@ -189,13 +220,19 @@ class SoundRecordNotifier extends ChangeNotifier {
   /// this function to manage counter value
   /// when reached to 60 sec
   /// reset the sec and increase the min by 1
-  _increaseCounterWhilePressed() {
+  _increaseCounterWhilePressed() async {
     if (loopActive) {
       return;
     }
 
     loopActive = true;
-
+    if (maxRecordTime != null) {
+      if (_localCounterForMaxRecordTime >= maxRecordTime!) {
+        loopActive = false;
+        finishRecording();
+      }
+      _localCounterForMaxRecordTime++;
+    }
     second = second + 1;
     buttonPressed = buttonPressed;
     if (second == 60) {

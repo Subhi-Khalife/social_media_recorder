@@ -44,14 +44,15 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Align(
             alignment: Alignment.centerRight,
             child: SocialMediaRecorder(
+              // maxRecordTimeInSecond: 5,
               startRecording: () {
-                // This function to make action when start recording
+                // function called when start recording
               },
               stopRecording: (_time) {
-                // This function to make action when stop recording
+                // function called when stop recording, return the recording time
               },
               sendRequestFunction: (soundFile, _time) {
-                // print("the current path is ${soundFile.path}");
+                //  print("the current path is ${soundFile.path}");
               },
               encode: AudioEncoderType.AAC,
             ),

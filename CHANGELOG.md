@@ -1,4 +1,6 @@
-## [0.3.34] 
+## [1.0.0] 
+Add new features to package ( controll in max record time , full package height and init record package width ) + fix some issue 
+## [0.3.35] 
 change readme file 
 ## [0.3.32] 
 change uuid package version
