@@ -52,9 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 // function called when stop recording, return the recording time
               },
               sendRequestFunction: (soundFile, _time) {
-                //  print("the current path is ${soundFile.path}");
+                 print("the current path is ${soundFile.path}");
               },
               encode: AudioEncoderType.AAC,
+              storeSoundRecoringPath: "/storage/emulated/0/new_record_sound",
             ),
           ),
         ),
