@@ -155,7 +155,7 @@ class SoundRecordNotifier extends ChangeNotifier {
     DateTime now = DateTime.now();
     String convertedDateTime =
         "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}-${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
-    print("the current data is $convertedDateTime");
+    // print("the current data is $convertedDateTime");
     String storagePath =
         _sdPath + "/" + convertedDateTime + _getSoundExtention();
     mPath = storagePath;
