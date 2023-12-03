@@ -1,4 +1,6 @@
-## [1.1.0] 
+## [1.1.12] 
+upgrade packages
+## [1.1.1] 
 remove print command 
 ## [1.1.0] 
 remove uid package and use DateTime to show record file name
