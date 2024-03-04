@@ -71,10 +71,10 @@ enum AudioEncoder {
 
 ### Android
 https://developer.android.com/reference/android/media/MediaRecorder.AudioEncoder
-### iOs
+### iOS
 https://developer.apple.com/documentation/coreaudiotypes/coreaudiotype_constants/1572096-audio_data_format_identifiers
 
-
+```dart
 ## Usage
 
     Align(
@@ -94,3 +94,4 @@ https://developer.apple.com/documentation/coreaudiotypes/coreaudiotype_constants
       ),
 
     );
+```
