@@ -1,4 +1,4 @@
-## [1.2.0]
+## [1.2.1]
 Upgrade to record package to 5.2.0
 Upgrade flutter version to 3.27.1
 Fix issues and improve package performance
