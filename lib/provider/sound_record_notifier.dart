@@ -9,6 +9,7 @@ import 'package:social_media_recorder/audio_encoder_type.dart';
 // import 'package:uuid/uuid.dart';
 
 class SoundRecordNotifier extends ChangeNotifier {
+  int _counter = 0;
   int _localCounterForMaxRecordTime = 0;
   GlobalKey key = GlobalKey();
   int? maxRecordTime;
@@ -135,16 +136,14 @@ class SoundRecordNotifier extends ChangeNotifier {
     lockScreenRecord = false;
     if (_timer != null) _timer!.cancel();
     if (_timerCounter != null) _timerCounter!.cancel();
-    recordMp3.isRecording().then((onValue) {
-      if (onValue) {
-        recordMp3.stop().then((onValue) {
-          recordMp3.dispose().then((onValue) {
-            recordMp3 = AudioRecorder();
-            notifyListeners();
-          });
-        });
-      }
-    });
+    final value = await recordMp3.isRecording();
+
+    if (value == true) {
+      recordMp3.stop().then((x) {
+        recordMp3 = AudioRecorder();
+      });
+      notifyListeners();
+    }
     notifyListeners();
   }
 
@@ -170,8 +169,9 @@ class SoundRecordNotifier extends ChangeNotifier {
     }
     DateTime now = DateTime.now();
     String convertedDateTime =
-        "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}-${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
+        "${_counter.toString()}${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}-${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
     // print("the current data is $convertedDateTime");
+    _counter++;
     String storagePath = _sdPath + "/" + convertedDateTime + _getSoundExtention();
     mPath = storagePath;
     return storagePath;
