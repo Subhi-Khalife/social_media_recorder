@@ -141,6 +141,7 @@ class SoundRecordNotifier extends ChangeNotifier {
     if (value == true) {
       recordMp3.stop().then((x) {
         recordMp3 = AudioRecorder();
+        notifyListeners();
       });
       notifyListeners();
     }
